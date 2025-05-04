@@ -15,7 +15,11 @@ connection.connect();
 
 router.get('/example1/user/:id', (req, res) => {
   let userId = req.params.id;
-  connection.query("SELECT * FROM users WHERE id = ?", [userId], (err, result) => {
+  let query = {
+    sql: "SELECT * FROM users WHERE id = ?",
+    values: [userId]
+  };
+  connection.query(query, (err, result) => {
     res.json(result);
   });
 });
@@ -29,10 +33,14 @@ router.get('/example2/user/:id', (req, res) => {
 
 router.get('/example3/user/:id', (req, res) => {
   let userId = req.params.id;
-  connection.query("SELECT * FROM users WHERE id = ?", [userId], (err, result) => {
+  connection.query({
+    sql: "SELECT * FROM users WHERE id = ?",
+    values: [userId]
+  }, (err, result) => {
     res.json(result);
   });
 });
+
 
 
 module.exports = router
